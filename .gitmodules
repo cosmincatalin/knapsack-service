@@ -1,0 +1,6 @@
+[submodule "knapsack-api"]
+	path = knapsack-api
+	url = git@github.com:cosmincatalin/knapsack-api.git
+[submodule "knapsack-deap"]
+	path = knapsack-deap
+	url = git@github.com:cosmincatalin/knapsack-deap.git

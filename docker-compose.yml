@@ -1,0 +1,8 @@
+version: '2'
+services:
+  engine:
+    build:
+      context: ./knapsack-deap
+      dockerfile: ./dockerfiles/engine.docker
+    environment:
+      - KAPP_ENGINE_HOST=${KAPP_ENGINE_HOST}
