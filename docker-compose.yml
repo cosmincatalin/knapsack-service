@@ -18,12 +18,14 @@ services:
       - ./db/mysql/data:/var/lib/mysql
       - ./db/mysql/init:/docker-entrypoint-initdb.d/:ro
   api:
-    build:
-      context: ./knapsack-api/dockerfiles
-      dockerfile: api.docker
+    build: ./knapsack-api
     container_name: knapsack-api
     volumes:
       - ./knapsack-api/target/scala-2.12:/app
-    command: java -jar knapsack-api.jar
     ports:
       - "5000:5000"
+  engine:
+    build: ./knapsack-deap
+    container_name: knapsack-engine
+    volumes:
+      - ./knapsack-deap:/code
