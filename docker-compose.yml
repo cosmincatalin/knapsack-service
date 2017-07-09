@@ -1,8 +1,29 @@
 version: '2'
 services:
-  engine:
-    build:
-      context: ./knapsack-deap
-      dockerfile: ./dockerfiles/engine.docker
+  messagebus:
+    container_name: knapsack-message-bus
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  db:
+    container_name: knapsack-db
+    image: mysql:5
+    user: "1000:50"
+    ports:
+      - "3306:3306"
     environment:
-      - KAPP_ENGINE_HOST=${KAPP_ENGINE_HOST}
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    volumes:
+      - ./db/mysql/data:/var/lib/mysql
+      - ./db/mysql/init:/docker-entrypoint-initdb.d/:ro
+  api:
+    build:
+      context: ./knapsack-api/dockerfiles
+      dockerfile: api.docker
+    container_name: knapsack-api
+    volumes:
+      - ./knapsack-api/target/scala-2.12:/app
+    command: java -jar knapsack-api.jar
+    ports:
+      - "5000:5000"
