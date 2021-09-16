@@ -4,7 +4,6 @@
 
 #### Prerequisites
 
-This guide is targeting _MacOS_ system, as recommended in the assignment.
 A recent version of _Docker_ must be installed and running.
 
 #### Fetch the repository
@@ -126,29 +125,3 @@ The _engine_ is an implementation of the _Genetic Algorithm_ using the _deap_ li
 #### Getting a solution
 
 ![problem](solution.png)
-
-## Requirements discussion
-
-- include a concise description of the design (architecture) of your solution - **DONE**
-- include complete code needed to execute the solution - **DONE**
-- use a build system with targets for building, testing, deploying, and executing the solution - Only the API needs to be built
-  - Only the _API_ is actually built with a build system, _sbt_. The engine, doesn't need building per say.
-- either contain all additional dependencies (e.g., external libraries, if you use any) or handle the download and installation thereof as needed (ideally, as part of the build process) - **DONE**
-- include a concise instruction on how to start and use the solution - **DONE**
-
-- start your solution as a single-process service on a local machine - The solution requires multiple Docker containers, so this is not technically achieved, but the impression is that of a single atomic service.
-- interact with your solution on the command line - **DONE**
-- submit a synchronous optimisation request - **DONE**
-- terminate the running solution in an elegant way (i.e., not by killing the process). - Docker can be gracefully terminated via `docker-compose down`
-
-- contain a discussion of the architecture, alternative designs, and justifications for choosing the one you chose - **DONEish**
-- enable the user to run multiple, configurable instances of the service with parameters passed as command line options, environment variables, and/or in config files.
-  - This is certainly possible. The two main components have environment variables exposed for fine tuning. A core feature of this service is that it is stateless and many instances of the components can run at the same time, albeit they need to communicate with the same database.
-- enable the user to submit multiple asynchronous requests (jobs) - **DONE**
-- provide logging and/or monitoring of a running service, possibly with a graphical dashboard - **DONEish** available by default with `docker-composer logs`. The level of detailed can be configured. No graphical touch however.
-- provide a modular solution, with clear decomposition into functional (micro)services, running in separate processes and communicating through appropriate APIs - **DONE**
-- provide a solution deployable on a remote machine or cluster, or in the cloud - **DONEish** the solution is not deployableas it is, the database and message bus need to be set-up in advance in a production grade system.
-- allow the user to run the solution on any operating system by means of an abstraction layer (e.g., docker); **DONE**
-- provide an elegant, intuitive graphical UI; **NOT**
-- enable one to upload a custom optimiser implementing an API you specify (e.g., a python script with a class or function with appropriate signature, an OSGi bundle, an executable binary or compilable code, etc.) - **DONEish** anyone can provide a new custom solution engine as long as it is able to read from the message bus and write to the database. That is a pretty flexible scenario.
-- enable authentication and authorisation, so that users can safely store their optimisation details in the system without exposing them to the public. **NOT** some additional services (Eg: Oauth) would have been required.
